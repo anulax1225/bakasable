@@ -1,20 +1,20 @@
 def get(name) -> str:
     return '''workspace "''' + name + '''"
-        architecture "x64"
-        configurations { "Debug", "Release" }
-        startproject "App"
+    architecture "x64"
+    configurations { "Debug", "Release" }
+    startproject "App"
 
-        flags
-        {
-            "MultiProcessorCompile"
-        }
+    flags
+    {
+        "MultiProcessorCompile"
+    }
 
-        linkgroups "On"
-    outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
-    
-    include "Depedencies.lua"
+    linkgroups "On"
+outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 
-    group "App"
-        include "app"
-    group ""
+include "dependencies.lua"
+
+group "App"
+    include "app"
+group ""
     '''
