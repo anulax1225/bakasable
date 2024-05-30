@@ -1,5 +1,6 @@
 import platform
 import os
+import Command
 
 def tool_exist(name: str) -> bool:
     from shutil import which
@@ -30,11 +31,11 @@ def build() -> None:
     verifie_tools()
     match platform.system():
         case "Windows": 
-            os.system("premake5 vs2022")
-            os.system("dotnet build")
+            Command.exec("premake5 vs2022")
+            Command.exec("dotnet build")
         case "Linux":
-            os.system("premake5 gmake2")
-            os.system("make")
+            Command.exec("premake5 gmake2")
+            Command.exec("make")
         case _:
             raise Exception("Platform not supported")
    

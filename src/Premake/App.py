@@ -1,5 +1,5 @@
 def get() -> str:
-    return '''project "App"
+    return """project "App"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++20"
@@ -47,4 +47,4 @@ filter "system:linux"
         "BK_PLATFORM_LINUX" 
     }
 filter ""
-    '''
+"""

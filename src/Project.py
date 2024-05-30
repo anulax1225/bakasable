@@ -1,6 +1,7 @@
 import os
 import json
 import Premake
+import Command
 
 class Project:
     def __init__(self, conf) -> None:
@@ -8,10 +9,10 @@ class Project:
         self.name = conf["name"]
         self.git_repo = conf["git"]
 
-    def __init__(self, name, author = "") -> None:
-        self.owner = author
+    def __init__(self, name, repo, author = "") -> None:
         self.name = name
-        self.git_repo = ""
+        self.owner = author
+        self.git_repo = repo
 
     def set_git_repo(self, url) -> None:
         self.git_repo = url
@@ -37,9 +38,6 @@ class Project:
         app = open("./app/premake5.lua", "w")
         app.write(Premake.App.get())
         app.close()
-        dep = open("./deps.lua", "w")
-        dep.write("IncludeDirs = {}")
-        dep.close()
         git_ign = open("./.gitignore", "w")
         git_ign.write("""/vendor/
 /bin/
@@ -62,7 +60,6 @@ class Project:
             os.mkdir("./app/src")
         except: raise Exception("Directory already exists.")
         create_file("./dependencies.lua")
-        create_file("./deps.lua")
         create_file("./app/src/app.cpp")
         create_file("./premake5.lua")
         create_file("./app/premake5.lua")
@@ -73,10 +70,10 @@ class Project:
         return os.path.exists("./.git")
 
     def init_git_repo(self) -> None:
-        os.system("git init --initial-branch=main")
-        os.system("git add .")
-        os.system('git commit -m "Initial commit"')
-        if len(self.git_repo) > 0: os.system(f'git remote add origin ${self.git_repo}')
+        Command.exec("git init --initial-branch=main")
+        Command.exec("git add .")
+        Command.exec('git commit -m "Initial commit"')
+        if len(self.git_repo) > 0: Command.exec(f'git remote add origin ${self.git_repo}')
         
 
 def create_file(path) -> None:
