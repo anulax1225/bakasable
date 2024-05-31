@@ -20,7 +20,6 @@ class Project:
     def create(self) -> None:
         self.create_folder()
         self.config()
-        if not self.as_git_repo(): self.init_git_repo()
 
     def config(self) -> None:
         conf = {
@@ -70,6 +69,7 @@ class Project:
         return os.path.exists("./.git")
 
     def init_git_repo(self) -> None:
+        if not self.as_git_repo(): return
         Command.exec("git init --initial-branch=main")
         Command.exec("git add .")
         Command.exec('git commit -m "Initial commit"')
