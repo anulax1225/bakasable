@@ -17,7 +17,6 @@ def init(args) -> None:
 
 def add(args) -> None:
     Package.add(args.author, args.name)
-    Package.reconfig()
 
 def remove(args) -> None:
     Package.remove(args.name)
