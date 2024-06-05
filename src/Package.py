@@ -50,7 +50,7 @@ def reconfig():
     for package in conf["packages"]:
         linkers += config(package["name"])
     links = "\nlinks\n{\n"
-    includes = '\nincludedirs\n{\n\t"%{proj.location}/src/",\n'
+    includes = '\nincludedirs\n{\n\t"%{prj.location}/src/",\n'
     for linker in linkers:
         if len(linker["links"]): 
             for link in linker["links"]:
