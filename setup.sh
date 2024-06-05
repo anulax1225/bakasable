@@ -7,5 +7,5 @@ handle_error() {
 trap 'handle_error $LINENO' ERR
 mkdir -m 777 ~/.bakasable
 mkdir ~/.bakasable/cache
-cp ./bakasable ~/.bakasable/
+cp ./bin/linux/bakasable ~/.bakasable/
 echo "export PATH=$PATH:~/.bakasable" >> ~/.bashrc
