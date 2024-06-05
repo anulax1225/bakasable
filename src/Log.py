@@ -20,11 +20,11 @@ f"""
 {ShColors.ENDC}""")
 
 def info(message) -> None:
-    print(f"{ShColors.OKGREEN}[INFO] :{message}{ShColors.ENDC}")
+    print(f"{ShColors.OKGREEN}[INFO] {message}{ShColors.ENDC}")
 
 def warning(message) -> None:
-    print(f"{ShColors.WARNING}[WARNING] : {message}{ShColors.ENDC}")
+    print(f"{ShColors.WARNING}[WARNING] {message}{ShColors.ENDC}")
 
 def error(message) -> None:
-    print(f"{ShColors.FAIL}[ERROR] : {ShColors.UNDERLINE}{message}{ShColors.ENDC}")
+    print(f"{ShColors.FAIL}[ERROR] {ShColors.UNDERLINE}{message}{ShColors.ENDC}")
     exit(1)
