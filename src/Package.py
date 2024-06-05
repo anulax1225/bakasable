@@ -55,7 +55,7 @@ def reconfig():
                 if len(link): links += '\t"%{' + link  + '}",\n'
         if len(linker["includes"]):
             for include in linker["includes"]:
-                if len(include): includes += '\t"%{' + include + '}",\n'
+                if len(include): includes += '\t"%{IncludeDirs.' + include + '}",\n'
     links += "}\n"
     includes += "}\n"
     f_linker= open("./app/linker.lua", "w")
