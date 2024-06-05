@@ -2,6 +2,7 @@ import os
 import json
 import Premake
 import Command
+import Log
 
 class Builder:
     def __init__(self, conf) -> None:
@@ -28,6 +29,7 @@ class Builder:
             "git": self.git_repo,
             "packages": []
         }
+        Log.info("Configuring package.json")
         file_conf = open("./package.json", "w")
         file_conf.write(json.dumps(conf, indent=4))
         file_conf.close()
@@ -49,7 +51,8 @@ class Builder:
 **.vcxproj*
 **.make
 **Makefile
-**deps.lua
+**dependencies.lua
+**linker.lua
 """)
 
     def create_folder(self) -> None:
@@ -57,7 +60,7 @@ class Builder:
             os.mkdir("./app")
             os.mkdir("./vendor")
             os.mkdir("./app/src")
-        except: raise Exception("Directory already exists.")
+        except: Log.error("Directory already exists.")
         create_file("./app/src/app.cpp")
         create_file("./premake5.lua")
         create_file("./app/premake5.lua")
@@ -68,7 +71,9 @@ class Builder:
         return os.path.exists("./.git")
 
     def init_git_repo(self) -> None:
-        if not self.as_git_repo(): return
+        if self.as_git_repo(): 
+            Log.warning("Git folder already exists.")
+            return
         Command.exec("git init --initial-branch=main")
         Command.exec("git add .")
         Command.exec('git commit -m "Initial commit"')

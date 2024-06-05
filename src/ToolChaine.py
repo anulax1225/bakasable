@@ -16,6 +16,7 @@ def search_tools(tools: str) -> str:
     return none_tools
 
 def verifie_build_tools() -> None:
+    Log.info(f"Verifing build tools")
     none_tools: str = []
     match platform.system():
         case "Windows": 
@@ -36,13 +37,17 @@ def run(config) -> None:
 
 
 def build(config) -> None:
+    Log.info(f"Starting build with config {config}")
     verifie_build_tools()
     match platform.system():
         case "Windows": 
             Command.exec("premake5 vs2022")
             Command.exec("dotnet build")
         case "Linux":
-            Command.exec(f"premake5 gmake2 && make config={config.lower()}")
+            Command.exec("premake5 gmake2")
+            Command.exec(f"make config={config.lower()}")
         case _:
             Log.error("Platform not supported")
+    Log.info("Finished build")
+    
    

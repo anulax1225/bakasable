@@ -8,6 +8,7 @@ import webbrowser
 import Log
 
 def config(package):
+    Log.info(f"Reconfiguring package {package}")
     if os.path.exists(f"./vendor/{package}/dependencies"):
         dep = open(f"./vendor/{package}/dependencies", "r")
         pkg_deps = dep.read()
@@ -39,6 +40,7 @@ def config(package):
 
 
 def reconfig():
+    Log.info("Reconfiguring build settings :")
     f_conf = open("./package.json", "r")
     conf = json.loads(f_conf.read())
     f_conf.close()
@@ -52,7 +54,7 @@ def reconfig():
     for linker in linkers:
         if len(linker["links"]): 
             for link in linker["links"]:
-                if len(link): links += '\t"%{' + link  + '}",\n'
+                if len(link): links += '\t"' + link  + '",\n'
         if len(linker["includes"]):
             for include in linker["includes"]:
                 if len(include): includes += '\t"%{IncludeDirs.' + include + '}",\n'
@@ -63,7 +65,7 @@ def reconfig():
     f_linker.close()
 
 def install(author, package) -> None:
-    Log.info(f"Installing {package}") 
+    Log.info(f"Installing package {package}") 
     if os.path.exists(f"./vendor/{package}"):
         Log.warning("Package already added")
         return 
@@ -91,12 +93,14 @@ def add(author, package) -> None:
     reconfig()
 
 def update(package) -> None:
+    Log.info(f"Updating package {package}")
     if not os.path.exists(f"./vendor/{package}"): Log.error("Package not found")
     os.chdir(f"./vendor/{package}")
     Command.exec("git pull")
     reconfig()
 
 def save(package, message) -> None:
+    Log.info(f"Saving package {package}")
     if not os.path.exists(f"./vendor/{package}"): Log.error("Package not found")
     os.chdir(f"./vendor/{package}")
     Command.exec("git add .")
@@ -115,7 +119,7 @@ def remove(package) -> None:
     reconfig()
 
 def r_remove(package) -> None:  
-    Log.info(f"Removing {package}") 
+    Log.info(f"Removing package {package}") 
     if not os.path.exists(f"./vendor/{package}/") : Log.error(f"Package {package} not the dependencies")  
     if os.path.exists(f"./vendor/{package}/package.json") :
         r_pkgs = json.loads(open(f"./vendor/{package}/package.json", "r").read())["packages"]
@@ -125,6 +129,7 @@ def r_remove(package) -> None:
     shutil.rmtree(f"./vendor/{package}/", ignore_errors=True)
 
 def install_root() -> None:
+    Log.info("Reinstalling all packages :")
     if not os.path.exists("./package.json"):
         Log.error("No package config file")
     f_conf = open("./package.json", "r")
@@ -141,8 +146,3 @@ def load_doc(package) -> None:
         Log.error("Doxygen config file not found")
     Command.exec(f"doxygen ./vendor/{package}")
     webbrowser.open("file://" + os.path.realpath(f"./vendor/{package}/docs/html/index.html"))
-
-
-
-
-    
