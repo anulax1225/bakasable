@@ -3,7 +3,7 @@ import json
 import Premake
 import Command
 
-class Project:
+class Builder:
     def __init__(self, conf) -> None:
         self.owner = conf["owner"]
         self.name = conf["name"]
@@ -28,7 +28,7 @@ class Project:
             "git": self.git_repo,
             "packages": []
         }
-        file_conf = open("./config.json", "w")
+        file_conf = open("./package.json", "w")
         file_conf.write(json.dumps(conf, indent=4))
         file_conf.close()
         wks = open("./premake5.lua", "w")
@@ -58,11 +58,10 @@ class Project:
             os.mkdir("./vendor")
             os.mkdir("./app/src")
         except: raise Exception("Directory already exists.")
-        create_file("./dependencies.lua")
         create_file("./app/src/app.cpp")
         create_file("./premake5.lua")
         create_file("./app/premake5.lua")
-        create_file("./config.json")
+        create_file("./package.json")
         create_file("./.gitignore")
 
     def as_git_repo(self) -> bool:

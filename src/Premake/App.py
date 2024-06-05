@@ -8,6 +8,8 @@ def get() -> str:
     targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
     objdir("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
     
+    include "linker.lua"
+
     files 
     {
         "src/**.h",
@@ -46,5 +48,4 @@ filter "system:linux"
     { 
         "BK_PLATFORM_LINUX" 
     }
-filter ""
 """

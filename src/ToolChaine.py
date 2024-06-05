@@ -2,6 +2,7 @@ import platform
 import os
 import json
 import Command
+import Log
 
 def tool_exist(name: str) -> bool:
     from shutil import which
@@ -22,18 +23,16 @@ def verifie_build_tools() -> None:
         case "Linux":
             none_tools = search_tools(["git", "g++", "premake5", "make"])
         case _:
-            raise Exception("Platform not supported")
+            Log.error("Platform not supported")
     if len(none_tools) > 0:
-        raise Exception(f"Tools missing {none_tools}")
+        Log.error(f"Tools missing {none_tools}")
 
 def run(config) -> None:
-    if not os.path.exists("./config.json"): raise Exception("Project not found")
-    conf = json.loads(open("./config.json").read())
-    name = conf["name"].lower()
-    print(f"./bin/{platform.system().lower()}-{platform.machine().lower()}-{config.lower()}/{name}/{name}")
-    if not os.path.exists(f"./bin/{platform.system().lower()}-{platform.machine().lower()}-{config.lower()}/{name}/{name}"): 
-        raise Exception("Executable not found")
-    Command.exec(f"./bin/{platform.system().lower()}-{platform.machine().lower()}-{config.lower()}/{name}/{name}")
+    Log.info("Running app")
+    Log.info(f"./bin/{platform.system().lower()}-{platform.machine().lower()}-{config}/App/App")
+    if not os.path.exists(f"./bin/{platform.system().lower()}-{platform.machine().lower()}-{config}/App/App"): 
+        Log.error("Executable not found")
+    Command.exec(f"chmod +x ./bin/{platform.system().lower()}-{platform.machine().lower()}-{config}/App/App && ./bin/{platform.system().lower()}-{platform.machine().lower()}-{config}/App/App")
 
 
 def build(config) -> None:
@@ -43,8 +42,7 @@ def build(config) -> None:
             Command.exec("premake5 vs2022")
             Command.exec("dotnet build")
         case "Linux":
-            Command.exec("premake5 gmake2")
-            Command.exec("make")
+            Command.exec(f"premake5 gmake2 && make config={config.lower()}")
         case _:
-            raise Exception("Platform not supported")
+            Log.error("Platform not supported")
    

@@ -12,7 +12,7 @@ def get(name) -> str:
     linkgroups "On"
 outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 
-include "deps.lua"
+include "dependencies.lua"
 
 group "App"
     include "app"
