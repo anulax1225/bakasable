@@ -102,6 +102,7 @@ def update(package) -> None:
     if not os.path.exists(f"./vendor/{package}"): Log.error("Package not found")
     os.chdir(f"./vendor/{package}")
     Command.exec("git pull")
+    os.chdir("../../")
     reconfig()
 
 def save(package, message) -> None:
