@@ -1,3 +1,5 @@
 /test_app/
 bin/
+build/
+**.spec
 **__pycache__**
