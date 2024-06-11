@@ -78,12 +78,12 @@ def bakasable() -> None:
     doc_parser.set_defaults(func=doc)
 
     build_parser = sub_parsers.add_parser("build", help="")
-    build_parser.add_argument("-c", "--config", type=str, required=True, dest="config", help="", choices=["Debug", "Release"])
+    build_parser.add_argument("-c", "--config", type=str, dest="config", help="", choices=["Debug", "Release"], default="Debug")
     build_parser.add_argument("-r", "--run", action="store_const", const=True, default=False, dest="run", help="")
     build_parser.set_defaults(func=build)
 
     run_parser = sub_parsers.add_parser("run", help="")
-    run_parser.add_argument("-c", "--config", type=str, required=True, dest="config", help="", choices=["Debug", "Release"])
+    run_parser.add_argument("-c", "--config", type=str, dest="config", help="", choices=["Debug", "Release"], default="Debug")
     run_parser.set_defaults(func=run)
 
     args = program_parser.parse_args()

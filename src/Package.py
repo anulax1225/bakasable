@@ -32,9 +32,6 @@ def config(package):
             "links": conf["links"],
             "includes": conf["includes"]
         })
-        if len(conf["packages"]):
-            for pkg in conf["packages"]:
-                linker += config(pkg["name"])
     return linker
         
 
@@ -47,8 +44,8 @@ def reconfig():
     if os.path.exists("./dependencies.lua"): os.remove("./dependencies.lua")
     if os.path.exists("./app/linker.lua"): os.remove("./app/linker.lua")
     linkers = []
-    for package in conf["packages"]:
-        linkers += config(package["name"])
+    for package in os.listdir("./vendor"):
+        linkers += config(package)
     links = "\nlinks\n{\n"
     includes = '\nincludedirs\n{\n\t"%{prj.location}/src/",\n'
     for linker in linkers:
@@ -67,10 +64,18 @@ def reconfig():
 def install(author, package) -> None:
     Log.info(f"Installing package {package}") 
     if os.path.exists(f"./vendor/{package}"):
-        Log.warning("Package already added")
+        Log.warning(f"Package {package} already added")
+        if os.path.exists(f"./vendor/{package}/package.json"): 
+            conf = open(f"./vendor/{package}/package.json", "r").read()
+            conf = json.loads(conf)
+            if len(conf["packages"]) > 0:
+                for pkg in conf["packages"]:
+                    install(pkg["author"], pkg["name"])
         return 
+
     if not ToolChaine.tool_exist("git"):
         Log.error("Tool missing git")
+
     Command.exec(f"git clone --depth 5 https://github.com/{author}/{package} ./vendor/{package}")
     if os.path.exists(f"./vendor/{package}/package.json"): 
         conf = open(f"./vendor/{package}/package.json", "r").read()
@@ -103,6 +108,7 @@ def save(package, message) -> None:
     Log.info(f"Saving package {package}")
     if not os.path.exists(f"./vendor/{package}"): Log.error("Package not found")
     os.chdir(f"./vendor/{package}")
+    Command.exec("git status")
     Command.exec("git add .")
     Command.exec(f'git commit -m "{message}"')
     Command.exec("git push")
