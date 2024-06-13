@@ -14,12 +14,12 @@ mkdir -m 777 ~/.bakasable
 mkdir ~/.bakasable/cache
 
 cp -f ./bin/linux/bakasable ~/.bakasable/
-if [ ! $(witch premake5) ]; then
+if [ ! $(which premake5) ]; then
     cp -f ./bin/linux/premake5 ~/.bakasable/
 fi
 
 echo Searching path in env PATH 
-if [ ! $(witch bakasable) ]; then
+if [ ! $(which bakasable) ]; then
     echo Path not found in env PATH
 	echo Adding path
     echo "export PATH=$PATH:~/.bakasable" >> ~/.bashrc
