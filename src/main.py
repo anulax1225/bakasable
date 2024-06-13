@@ -25,7 +25,7 @@ def update(args) -> None:
     Package.update(args.name)
 
 def save(args) -> None:
-    Package.save(args.name, args.message)
+    Package.save(args.name, args.message, args.paths)
 
 def install(args) -> None:
     Package.install_root()
@@ -68,6 +68,7 @@ def bakasable() -> None:
     save_parser = sub_parsers.add_parser("save", help="saves a module to it's repo")
     save_parser.add_argument("-n", "--name", type=str, required=True, dest="name", help="name of the github repository")
     save_parser.add_argument("-m", "--message", type=str, required=True, dest="message", help="message of the git commit")
+    save_parser.add_argument("-p", "--path", type=str, nargs="+", dest="paths", help="files to archive else archive all")
     save_parser.set_defaults(func=save)
 
     install_parser = sub_parsers.add_parser("install", help="installs the dependencies of your project")

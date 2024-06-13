@@ -105,12 +105,18 @@ def update(package) -> None:
     os.chdir("../../")
     reconfig()
 
-def save(package, message) -> None:
+def save(package, message, paths) -> None:
     Log.info(f"Saving package {package}")
     if not os.path.exists(f"./vendor/{package}"): Log.error("Package not found")
+    adds = "";
+    if len(paths):
+        for path in paths:
+            adds += path + " "
+    else: adds = "."
+    Log.info(f"Paths to archive : {adds}")
     os.chdir(f"./vendor/{package}")
     Command.exec("git status")
-    Command.exec("git add .")
+    Command.exec(f"git add {adds}")
     Command.exec(f'git commit -m "{message}"')
     Command.exec("git push")
 
