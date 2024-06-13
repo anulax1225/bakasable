@@ -108,8 +108,8 @@ def update(package) -> None:
 def save(package, message, paths) -> None:
     Log.info(f"Saving package {package}")
     if not os.path.exists(f"./vendor/{package}"): Log.error("Package not found")
-    adds = "";
-    if len(paths):
+    adds = ""
+    if paths is not None and len(paths):
         for path in paths:
             adds += path + " "
     else: adds = "."
