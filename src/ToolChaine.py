@@ -42,7 +42,6 @@ def build(config) -> None:
     match platform.system():
         case "Windows": 
             Command.exec("premake5 vs2022")
-            Command.exec(f"dotnet build -c {config}")
         case "Linux":
             Command.exec("premake5 gmake2")
             Command.exec(f"make config={config.lower()}")
