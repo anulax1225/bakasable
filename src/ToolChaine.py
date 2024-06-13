@@ -20,7 +20,7 @@ def verifie_build_tools() -> None:
     none_tools: str = []
     match platform.system():
         case "Windows": 
-            none_tools = search_tools(["git", "dotnet", "premake5"])
+            none_tools = search_tools(["git", "premake5"])
         case "Linux":
             none_tools = search_tools(["git", "g++", "premake5", "make"])
         case _:
@@ -42,6 +42,7 @@ def build(config) -> None:
     match platform.system():
         case "Windows": 
             Command.exec("premake5 vs2022")
+            Log.info("Build with vscode 2022")
         case "Linux":
             Command.exec("premake5 gmake2")
             Command.exec(f"make config={config.lower()}")
