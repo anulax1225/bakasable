@@ -36,6 +36,7 @@ filter "configurations:Release"
     optimize "on"
 
 filter "system:windows"
+    buildoptions "/MT"
     staticruntime "on"
     defines 
     { 

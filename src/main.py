@@ -48,7 +48,7 @@ def bakasable() -> None:
     init_parser = sub_parsers.add_parser("init", help="initialise a new project")
     init_parser.add_argument("-n", "--name", type=str, required=True, dest="name", help="name of your")
     init_parser.add_argument("-r", "--repo", type=str, default="", dest="repo", help="git repository where project is stored")
-    init_parser.add_argument("-o", "--owner", type=str, default="", dest="owner", help="owner of the project")
+    init_parser.add_argument("-a", "--author", type=str, default="", dest="owner", help="owner of the project")
     init_parser.add_argument("-g", "--git-init", action="store_const", const=True, default=False, dest="git_init", help="initialise a local git folder")
     init_parser.set_defaults(func=init)
 

@@ -6,7 +6,7 @@ import Log
 
 class Builder:
     def __init__(self, conf) -> None:
-        self.owner = conf["owner"]
+        self.owner = conf["author"]
         self.name = conf["name"]
         self.git_repo = conf["git"]
 
@@ -25,7 +25,7 @@ class Builder:
     def config(self) -> None:
         conf = {
             "name": self.name,
-            "owner": self.owner,
+            "author": self.owner,
             "git": self.git_repo,
             "packages": []
         }
