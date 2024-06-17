@@ -22,7 +22,7 @@ echo Searching path in env PATH
 if [ ! $(which bakasable) ]; then
     echo Path not found in env PATH
 	echo Adding path
-    echo "export PATH=$PATH:~/.bakasable" >> ~/.bashrc
+    echo "export PATH=\$PATH:~/.bakasable" >> ~/.bashrc
 else
     echo Path already added
 fi
