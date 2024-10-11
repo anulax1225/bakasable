@@ -45,6 +45,8 @@ def build(config) -> None:
             Log.info("Build with vscode 2022")
         case "Linux":
             Command.exec("premake5 gmake2")
+            Command.exec("premake5 export-compile-commands")
+            Command.exec(f"mv ./compile_commands/{config.lower()}.json ./compile_commands.json")
             Command.exec(f"make config={config.lower()}")
         case _:
             Log.error("Platform not supported")

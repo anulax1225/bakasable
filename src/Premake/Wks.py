@@ -8,7 +8,7 @@ def get(name) -> str:
     {
         "MultiProcessorCompile"
     }
-
+    toolset "clang"
     linkgroups "On"
 outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 
