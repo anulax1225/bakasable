@@ -16,9 +16,10 @@ cp -f ./bin/linux/bakasable ~/.bakasable/
 if [ ! $(which premake5) ]; then
     echo Installing premake  
     cp -f ./bin/linux/premake5 ~/.bakasable/
+    chmod +x ~/.bakasable/premake5
     echo Installing export-compile-commands module
-    cp -f ./bin/vendor/export-compile-commands ~/.bakasable/
-    echo 'require "export-compile-commands"' >> ~/.bakasable/
+    cp -rf ./bin/vendor/export-compile-commands ~/.bakasable/
+    echo 'require "export-compile-commands"' >> ~/.bakasable/premake-system.lua
 fi
 
 echo Searching path in env PATH 
