@@ -47,6 +47,7 @@ def build(config) -> None:
             Command.exec("premake5 gmake2")
             Command.exec("premake5 export-compile-commands")
             Command.exec(f"mv ./compile_commands/{config.lower()}.json ./compile_commands.json")
+            Command.exec("rm -rf ./compile_commands")
             Command.exec(f"make config={config.lower()}")
         case _:
             Log.error("Platform not supported")
